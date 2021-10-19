@@ -240,14 +240,14 @@ print(students[['intake', 'age_at_intake', 'gender']].groupby(['intake', 'gender
 # In[ ]:
 
 
-age_by_intake = students[['intake', 'age_at_intake']]
+# age_by_intake = students[['intake', 'age_at_intake']]
 
 # varmista hakuväylien järjestys kuvaajassa, ja siisti sen jälkeen kuvaajan selitys ottamalla kommentointi pois solun viimeisestä rivistä
 # labels-listan järjestystä saattaa joutua muuttamaan, jotta uudet labelit osuvat oikeisiin sisäänpääsyväylädatoihin
-g = sns.kdeplot(data = age_by_intake, x = 'age_at_intake', hue = 'intake', multiple = 'fill', bw_adjust = 0.5)
-g.set(xlim = (age_by_intake['age_at_intake'].min(), age_by_intake['age_at_intake'].max()), xlabel = 'Age at intake', ylabel = 'Distribution of ages')
+# g = sns.kdeplot(data = age_by_intake, x = 'age_at_intake', hue = 'intake', multiple = 'fill', bw_adjust = 0.5)
+# g.set(xlim = (age_by_intake['age_at_intake'].min(), age_by_intake['age_at_intake'].max()), xlabel = 'Age at intake', ylabel = 'Distribution of ages')
 # g.legend(title = 'Intake', labels = ['DEFA accept', 'Open uni.', 'DEFA tried', 'Main'])
-plt.show()
+# plt.show()
 
 age_by_intake = students[['intake', 'age_at_intake']]
 
@@ -255,56 +255,104 @@ age_by_intake = students[['intake', 'age_at_intake']]
 # labels-listan järjestystä saattaa joutua muuttamaan, jotta uudet labelit osuvat oikeisiin sisäänpääsyväylädatoihin
 g = sns.kdeplot(data = age_by_intake, x = 'age_at_intake', hue = 'intake', multiple = 'layer', bw_adjust = 0.5)
 g.set(xlim = (age_by_intake['age_at_intake'].min(), age_by_intake['age_at_intake'].max()), xlabel = 'Age at intake', ylabel = 'Distribution of ages')
-# g.legend(title = 'Intake', labels = ['DEFA accept', 'Open uni.', 'DEFA tried', 'Main'])
+g.legend(title = 'Intake', labels = ['DEFA accept', 'Open uni.', 'Main'])
 plt.show()
 
-age_by_intake = students[['intake', 'age_at_intake']]
+# age_by_intake = students[['intake', 'age_at_intake']]
 
 # varmista hakuväylien järjestys kuvaajassa, ja siisti sen jälkeen kuvaajan selitys ottamalla kommentointi pois solun viimeisestä rivistä
 # labels-listan järjestystä saattaa joutua muuttamaan, jotta uudet labelit osuvat oikeisiin sisäänpääsyväylädatoihin
-g = sns.kdeplot(data = age_by_intake, x = 'age_at_intake', hue = 'intake', multiple = 'stack', bw_adjust = 0.5)
-g.set(xlim = (age_by_intake['age_at_intake'].min(), age_by_intake['age_at_intake'].max()), xlabel = 'Age at intake', ylabel = 'Distribution of ages')
+# g = sns.kdeplot(data = age_by_intake, x = 'age_at_intake', hue = 'intake', multiple = 'stack', bw_adjust = 0.5)
+# g.set(xlim = (age_by_intake['age_at_intake'].min(), age_by_intake['age_at_intake'].max()), xlabel = 'Age at intake', ylabel = 'Distribution of ages')
 # g.legend(title = 'Intake', labels = ['DEFA accept', 'Open uni.', 'DEFA tried', 'Main'])
-plt.show()
+# plt.show()
 
-age_by_intake = students[['intake', 'age_at_intake']]
+# age_by_intake = students[['intake', 'age_at_intake']]
 
-sns.set(rc={'figure.figsize':(10,10)})
-g = sns.countplot(data = age_by_intake, x = 'age_at_intake', hue = 'intake')
-plt.show()
+# sns.set(rc={'figure.figsize':(10,10)})
+# g = sns.countplot(data = age_by_intake, x = 'age_at_intake', hue = 'intake')
+# plt.show()
 
 # Khi^2 testi (onko tilastollisesti merkitsevää eroa siinä, mitä väylää miehet ja naiset suosivat)
 # Testin outputissa toinen luku on p-value. Muiden arvojen selitykset: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.chi2_contingency.html
 
 obs = np.array([students_genders['women'], students_genders['men']])
 print("Khi2: ")
-print(chi2_contingency(obs))
+print(chi2_contingency(obs, correction = False))
 
 # In[ ]:
-
-
-# Example Kruskal-Wallis test
-# Credits between intakes, first year
 
 comparison_df = intake_credits[['intake', 'study_year', 'credits']]
+grades_df = intake_gpas[['intake', 'study_year', 'grade']]
 
-# Aja kaikille muuttujille, joita haluat tutkia omista sisäänpääsyväylistä
-# Alla ajettu ensimmäisen vuoden opintopisteille -> jos haluaa katsoa esim. toisen vuoden nopat, pitää ajaa erikseen study_year == 2.0 jne.
-# Samat myös keskiarvoille
-print("Kruskal (see comments for details): ")
+print('Credits between intakes, total')
+
+print(kruskal(comparison_df[comparison_df['intake'] == 'defa_accept']['credits'],
+        comparison_df[comparison_df['intake'] == 'main']['credits']))
+
+print('DEFA:', np.mean(comparison_df[comparison_df['intake'] == 'defa_accept']['credits']))
+print('Main:', np.mean(comparison_df[comparison_df['intake'] == 'main']['credits']))
+print(mannwhitneyu(comparison_df[comparison_df['intake'] == 'defa_accept']['credits'], comparison_df[comparison_df['intake'] == 'main']['credits']))
+
+print('GPAs between intakes, total')
+
+print(kruskal(grades_df[grades_df['intake'] == 'defa_accept']['grade'],
+        grades_df[grades_df['intake'] == 'main']['grade']))
+
+print('DEFA:', np.mean(grades_df[grades_df['intake'] == 'defa_accept']['grade']))
+print('Main:', np.mean(grades_df[grades_df['intake'] == 'main']['grade']))
+print(mannwhitneyu(grades_df[grades_df['intake'] == 'defa_accept']['grade'], grades_df[grades_df['intake'] == 'main']['grade']))
+
+print('Credits between intakes, first year')
+
 print(kruskal(comparison_df[(comparison_df['intake'] == 'defa_accept') & (comparison_df['study_year'] == 1.0)]['credits'],
-        comparison_df[(comparison_df['intake'] == 'main') & (comparison_df['study_year'] == 1.0)]['credits'],
-        comparison_df[(comparison_df['intake'] == 'ay') & (comparison_df['study_year'] == 1.0)]['credits']))
+        comparison_df[(comparison_df['intake'] == 'main') & (comparison_df['study_year'] == 1.0)]['credits']))
 
-
-# In[ ]:
-
-
-# Example Mann-Whitney U test
-# Credits between DEFA and main, first year
-# Aja tämä niille vertailuille, jotka haluat tehdä
-
-print('Credits')
 print('DEFA:', np.mean(comparison_df[(comparison_df['intake'] == 'defa_accept') & (comparison_df['study_year'] == 1.0)]['credits']))
 print('Main:', np.mean(comparison_df[(comparison_df['intake'] == 'main') & (comparison_df['study_year'] == 1.0)]['credits']))
 print(mannwhitneyu(comparison_df[(comparison_df['intake'] == 'defa_accept') & (comparison_df['study_year'] == 1.0)]['credits'], comparison_df[(comparison_df['intake'] == 'main') & (comparison_df['study_year'] == 1.0)]['credits']))
+
+print('GPAs between intakes, first year')
+
+print(kruskal(grades_df[(grades_df['intake'] == 'defa_accept') & (grades_df['study_year'] == 1.0)]['grade'],
+        grades_df[(grades_df['intake'] == 'main') & (grades_df['study_year'] == 1.0)]['grade']))
+
+print('DEFA:', np.mean(grades_df[(grades_df['intake'] == 'defa_accept') & (grades_df['study_year'] == 1.0)]['grade']))
+print('Main:', np.mean(grades_df[(grades_df['intake'] == 'main') & (grades_df['study_year'] == 1.0)]['grade']))
+print(mannwhitneyu(grades_df[(grades_df['intake'] == 'defa_accept') & (grades_df['study_year'] == 1.0)]['grade'], grades_df[(grades_df['intake'] == 'main') & (grades_df['study_year'] == 1.0)]['grade']))
+
+print('Credits between intakes, second year')
+
+print(kruskal(comparison_df[(comparison_df['intake'] == 'defa_accept') & (comparison_df['study_year'] == 2.0)]['credits'],
+        comparison_df[(comparison_df['intake'] == 'main') & (comparison_df['study_year'] == 2.0)]['credits']))
+
+print('DEFA:', np.mean(comparison_df[(comparison_df['intake'] == 'defa_accept') & (comparison_df['study_year'] == 2.0)]['credits']))
+print('Main:', np.mean(comparison_df[(comparison_df['intake'] == 'main') & (comparison_df['study_year'] == 2.0)]['credits']))
+print(mannwhitneyu(comparison_df[(comparison_df['intake'] == 'defa_accept') & (comparison_df['study_year'] == 2.0)]['credits'], comparison_df[(comparison_df['intake'] == 'main') & (comparison_df['study_year'] == 2.0)]['credits']))
+
+print('GPAs between intakes, second year')
+
+print(kruskal(grades_df[(grades_df['intake'] == 'defa_accept') & (grades_df['study_year'] == 2.0)]['grade'],
+        grades_df[(grades_df['intake'] == 'main') & (grades_df['study_year'] == 2.0)]['grade']))
+
+print('DEFA:', np.mean(grades_df[(grades_df['intake'] == 'defa_accept') & (grades_df['study_year'] == 2.0)]['grade']))
+print('Main:', np.mean(grades_df[(grades_df['intake'] == 'main') & (grades_df['study_year'] == 2.0)]['grade']))
+print(mannwhitneyu(grades_df[(grades_df['intake'] == 'defa_accept') & (grades_df['study_year'] == 2.0)]['grade'], grades_df[(grades_df['intake'] == 'main') & (grades_df['study_year'] == 2.0)]['grade']))
+
+print('Credits between intakes, third year')
+
+print(kruskal(comparison_df[(comparison_df['intake'] == 'defa_accept') & (comparison_df['study_year'] == 3.0)]['credits'],
+        comparison_df[(comparison_df['intake'] == 'main') & (comparison_df['study_year'] == 3.0)]['credits']))
+
+print('DEFA:', np.mean(comparison_df[(comparison_df['intake'] == 'defa_accept') & (comparison_df['study_year'] == 3.0)]['credits']))
+print('Main:', np.mean(comparison_df[(comparison_df['intake'] == 'main') & (comparison_df['study_year'] == 3.0)]['credits']))
+print(mannwhitneyu(comparison_df[(comparison_df['intake'] == 'defa_accept') & (comparison_df['study_year'] == 3.0)]['credits'], comparison_df[(comparison_df['intake'] == 'main') & (comparison_df['study_year'] == 3.0)]['credits']))
+
+print('GPAs between intakes, third year')
+
+print(kruskal(grades_df[(grades_df['intake'] == 'defa_accept') & (grades_df['study_year'] == 3.0)]['grade'],
+        grades_df[(grades_df['intake'] == 'main') & (grades_df['study_year'] == 3.0)]['grade']))
+
+print('DEFA:', np.mean(grades_df[(grades_df['intake'] == 'defa_accept') & (grades_df['study_year'] == 3.0)]['grade']))
+print('Main:', np.mean(grades_df[(grades_df['intake'] == 'main') & (grades_df['study_year'] == 3.0)]['grade']))
+print(mannwhitneyu(grades_df[(grades_df['intake'] == 'defa_accept') & (grades_df['study_year'] == 3.0)]['grade'], grades_df[(grades_df['intake'] == 'main') & (grades_df['study_year'] == 3.0)]['grade']))
