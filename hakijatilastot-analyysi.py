@@ -356,3 +356,51 @@ print(kruskal(grades_df[(grades_df['intake'] == 'defa_accept') & (grades_df['stu
 print('DEFA:', np.mean(grades_df[(grades_df['intake'] == 'defa_accept') & (grades_df['study_year'] == 3.0)]['grade']))
 print('Main:', np.mean(grades_df[(grades_df['intake'] == 'main') & (grades_df['study_year'] == 3.0)]['grade']))
 print(mannwhitneyu(grades_df[(grades_df['intake'] == 'defa_accept') & (grades_df['study_year'] == 3.0)]['grade'], grades_df[(grades_df['intake'] == 'main') & (grades_df['study_year'] == 3.0)]['grade']))
+
+print('SD credits total DEFA')
+print(comparison_df[comparison_df['intake'] == 'defa_accept'].std())
+
+print('SD credits year 1 DEFA')
+print(comparison_df[(comparison_df['intake'] == 'defa_accept') & (comparison_df['study_year'] == 1.0)].std())
+
+print('SD credits year 2 DEFA')
+print(comparison_df[(comparison_df['intake'] == 'defa_accept') & (comparison_df['study_year'] == 2.0)].std())
+
+print('SD credits year 3 DEFA')
+print(comparison_df[(comparison_df['intake'] == 'defa_accept') & (comparison_df['study_year'] == 3.0)].std())
+
+print('SD credits total main')
+print(comparison_df[comparison_df['intake'] == 'main'].std())
+
+print('SD credits year 1 main')
+print(comparison_df[(comparison_df['intake'] == 'main') & (comparison_df['study_year'] == 1.0)].std())
+
+print('SD credits year 2 main')
+print(comparison_df[(comparison_df['intake'] == 'main') & (comparison_df['study_year'] == 2.0)].std())
+
+print('SD credits year 3 main')
+print(comparison_df[(comparison_df['intake'] == 'main') & (comparison_df['study_year'] == 3.0)].std())
+
+print('SD GPAs total DEFA')
+print(grades_df[grades_df['intake'] == 'defa_accept'].std())
+
+print('SD GPAs year 1 DEFA')
+print(grades_df[(grades_df['intake'] == 'defa_accept') & (grades_df['study_year'] == 1.0)].std())
+
+print('SD GPAs year 2 DEFA')
+print(grades_df[(grades_df['intake'] == 'defa_accept') & (grades_df['study_year'] == 2.0)].std())
+
+print('SD GPAs year 3 DEFA')
+print(grades_df[(grades_df['intake'] == 'defa_accept') & (grades_df['study_year'] == 3.0)].std())
+
+print('SD GPAs total main')
+print(grades_df[grades_df['intake'] == 'main'].std())
+
+print('SD GPAs year 1 main')
+print(grades_df[(grades_df['intake'] == 'main') & (grades_df['study_year'] == 1.0)].std())
+
+print('SD GPAs year 2 main')
+print(grades_df[(grades_df['intake'] == 'main') & (grades_df['study_year'] == 2.0)].std())
+
+print('SD GPAs year 3 main')
+print(grades_df[(grades_df['intake'] == 'main') & (grades_df['study_year'] == 3.0)].std())
