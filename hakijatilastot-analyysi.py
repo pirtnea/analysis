@@ -188,6 +188,9 @@ print(intake_gpas_s_n)
 print("Average age by intake: ")
 print(students[['intake', 'age_at_intake']].groupby('intake', as_index = False).mean())
 
+intake_age = students[['intake', 'age_at_intake']]
+print(mannwhitneyu(intake_age[intake_age['intake'] == 'defa_accept']['age_at_intake'], intake_age[intake_age['intake'] == 'main']['age_at_intake']))
+
 
 # In[ ]:
 
