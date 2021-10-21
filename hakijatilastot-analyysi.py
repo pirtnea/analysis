@@ -264,7 +264,7 @@ g.legend(title = 'Intake', labels = ['DEFA accept', 'Open uni.', 'Main'])
 plt.show()
 
 g = sns.histplot(data = age_by_intake, x = 'age_at_intake', hue = 'intake', multiple = 'layer', discrete = True)#, #bw_adjust = 0.5)
-g.set(xlim = (age_by_intake['age_at_intake'].min(), age_by_intake['age_at_intake'].max()))#, xlabel = 'Age at intake', ylabel = 'Distribution of ages')
+g.set(xlim = (age_by_intake['age_at_intake'].min(), age_by_intake['age_at_intake'].max()), xlabel = 'Age at intake')
 g.legend(title = 'Intake', labels = ['DEFA accept', 'Open uni.', 'Main'])
 plt.show()
 
