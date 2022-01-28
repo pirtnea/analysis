@@ -414,3 +414,9 @@ print(grades_df[(grades_df['intake'] == 'main') & (grades_df['study_year'] == 2.
 
 print('SD GPAs year 3 main')
 print(grades_df[(grades_df['intake'] == 'main') & (grades_df['study_year'] == 3.0)].std())
+
+print('SD age main')
+print(intake_age[intake_age['intake'] == 'main'].std())
+
+print('SD age DEFA')
+print(intake_age[intake_age['intake'] == 'defa_accept'].std())
