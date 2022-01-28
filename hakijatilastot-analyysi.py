@@ -258,10 +258,10 @@ print('Varmista kuvaajissa, että väylien labelit menevät oikein! Vain HYllä 
 
 # varmista hakuväylien järjestys kuvaajassa, ja siisti sen jälkeen kuvaajan selitys ottamalla kommentointi pois solun viimeisestä rivistä
 # labels-listan järjestystä saattaa joutua muuttamaan, jotta uudet labelit osuvat oikeisiin sisäänpääsyväylädatoihin
-g = sns.kdeplot(data = age_by_intake, x = 'age_at_intake', hue = 'intake', multiple = 'layer', bw_adjust = 0.5)
-g.set(xlim = (age_by_intake['age_at_intake'].min(), age_by_intake['age_at_intake'].max()), xlabel = 'Age at intake', ylabel = 'Distribution of ages')
-g.legend(title = 'Intake', labels = ['DEFA accept', 'Open uni.', 'Main'])
-plt.show()
+# g = sns.kdeplot(data = age_by_intake, x = 'age_at_intake', hue = 'intake', multiple = 'layer', bw_adjust = 0.5)
+# g.set(xlim = (age_by_intake['age_at_intake'].min(), age_by_intake['age_at_intake'].max()), xlabel = 'Age at intake', ylabel = 'Distribution of ages')
+# g.legend(title = 'Intake', labels = ['DEFA accept', 'Open uni.', 'Main'])
+# plt.show()
 
 g = sns.histplot(data = age_by_intake, x = 'age_at_intake', hue = 'intake', multiple = 'layer', discrete = True)#, #bw_adjust = 0.5)
 g.set(xlim = (age_by_intake['age_at_intake'].min(), age_by_intake['age_at_intake'].max()), xlabel = 'Age at intake')
